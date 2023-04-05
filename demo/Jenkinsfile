@@ -1,0 +1,21 @@
+pipeline {
+    agent {
+        docker {
+            image 'maven:3.8.3-openjdk-17' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
+    stages {
+        stage('init') { 
+            steps {
+            	sh 'java -version'
+            }
+        }
+    
+        stage('Build') { 
+            steps {
+                sh 'mvn -U -X -DskipTests  clean install' 
+            }
+        }
+    }
+}
